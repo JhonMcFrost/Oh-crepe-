@@ -1,35 +1,67 @@
 import { Routes } from '@angular/router';
 import { authGuard, roleGuard } from './guards/auth.guard';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/auth/login.component';
-import { RegisterComponent } from './components/auth/register.component';
-import { MenuComponent } from './components/customer/menu.component';
-import { CartComponent } from './components/customer/cart.component';
-import { CheckoutComponent } from './components/customer/checkout.component';
-import { OrderConfirmationComponent } from './components/customer/order-confirmation.component';
-import { MyOrdersComponent } from './components/customer/my-orders.component';
-import { StaffOrdersComponent } from './components/staff/staff-orders.component';
-import { AdminMenuComponent } from './components/admin/admin-menu.component';
-import { AdminUsersComponent } from './components/admin/admin-users.component';
 
+// Use lazy-loaded components (loadComponent) to reduce initial bundle size.
 export const routes: Routes = [
-  { path: '/', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  
+  {
+    path: '',
+    loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./components/auth/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./components/auth/register.component').then(m => m.RegisterComponent)
+  },
+
   // Customer routes
-  { path: 'menu', component: MenuComponent, canActivate: [authGuard] },
-  { path: 'cart', component: CartComponent, canActivate: [roleGuard(['customer'])] },
-  { path: 'checkout', component: CheckoutComponent, canActivate: [roleGuard(['customer'])] },
-  { path: 'order-confirmation/:orderId', component: OrderConfirmationComponent, canActivate: [roleGuard(['customer'])] },
-  { path: 'my-orders', component: MyOrdersComponent, canActivate: [roleGuard(['customer'])] },
-  
+  {
+    path: 'menu',
+    loadComponent: () => import('./components/customer/menu.component').then(m => m.MenuComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'cart',
+    loadComponent: () => import('./components/customer/cart.component').then(m => m.CartComponent),
+    canActivate: [roleGuard(['customer'])]
+  },
+  {
+    path: 'checkout',
+    loadComponent: () => import('./components/customer/checkout.component').then(m => m.CheckoutComponent),
+    canActivate: [roleGuard(['customer'])]
+  },
+  {
+    path: 'order-confirmation/:orderId',
+    loadComponent: () => import('./components/customer/order-confirmation.component').then(m => m.OrderConfirmationComponent),
+    canActivate: [roleGuard(['customer'])]
+  },
+  {
+    path: 'my-orders',
+    loadComponent: () => import('./components/customer/my-orders.component').then(m => m.MyOrdersComponent),
+    canActivate: [roleGuard(['customer'])]
+  },
+
   // Staff routes
-  { path: 'staff/orders', component: StaffOrdersComponent, canActivate: [roleGuard(['staff', 'admin'])] },
-  
+  {
+    path: 'staff/orders',
+    loadComponent: () => import('./components/staff/staff-orders.component').then(m => m.StaffOrdersComponent),
+    canActivate: [roleGuard(['staff', 'admin'])]
+  },
+
   // Admin routes
-  { path: 'admin/menu', component: AdminMenuComponent, canActivate: [roleGuard(['admin'])] },
-  { path: 'admin/users', component: AdminUsersComponent, canActivate: [roleGuard(['admin'])] },
-  
-  { path: '**', redirectTo: '' },
+  {
+    path: 'admin/menu',
+    loadComponent: () => import('./components/admin/admin-menu.component').then(m => m.AdminMenuComponent),
+    canActivate: [roleGuard(['admin'])]
+  },
+  {
+    path: 'admin/users',
+    loadComponent: () => import('./components/admin/admin-users.component').then(m => m.AdminUsersComponent),
+    canActivate: [roleGuard(['admin'])]
+  },
+
+  // Fallback
+  { path: '**', redirectTo: '' }
 ];
