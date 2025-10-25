@@ -6,12 +6,6 @@
   "outputDirectory": "dist/oh_crepe/browser",
   "installCommand": "npm ci",
   "framework": "angular",
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/home.component.ts"
-    }
-  ],
   "headers": [
     {
       "source": "/assets/",
