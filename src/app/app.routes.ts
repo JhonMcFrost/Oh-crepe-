@@ -13,7 +13,7 @@ import { AdminMenuComponent } from './components/admin/admin-menu.component';
 import { AdminUsersComponent } from './components/admin/admin-users.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '/', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   
