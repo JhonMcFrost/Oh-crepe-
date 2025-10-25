@@ -2,10 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "name": "oh-crepe",
-  "buildCommand": "ng build --configuration production",
   "outputDirectory": "dist/oh_crepe",
   "framework": "angular",
-  "installCommand": "npm install",
   "rewrites": [
     {
       "source": "/(.*)",

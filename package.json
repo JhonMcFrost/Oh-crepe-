@@ -8,7 +8,7 @@
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "vercel-build": "ng build --configuration production",
+    "vercel-build": "npm ci && ng build --configuration production",
     "preview": "ng serve --configuration production"
   },
   "prettier": {
@@ -36,7 +36,8 @@
     "idb": "^8.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular/build": "^20.3.6",
