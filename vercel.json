@@ -8,13 +8,13 @@
   "framework": "angular",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/",
       "destination": "/index.html"
     }
   ],
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/assets/",
       "headers": [
         {
           "key": "Cache-Control",
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))",
+      "source": "/",
       "headers": [
         {
           "key": "Cache-Control", 
