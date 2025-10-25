@@ -40,10 +40,5 @@
         }
       ]
     }
-  ],
-  "functions": {
-    "src/**/*.ts": {
-      "runtime": "@vercel/node@18"
-    }
-  }
+  ]
 }
