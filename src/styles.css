@@ -49,7 +49,8 @@ body {
     sans-serif;
   line-height: 1.6;
   color: var(--text-dark);
-  background-image: url('/assets/Background_crepe.png');
+  /* Set site-wide background image (fallback color kept) */
+  background-image: url('/assets/O.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -68,7 +69,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 252, 224, 0.85);
+  background: rgba(255, 252, 224, 0.40);
   z-index: -1;
   pointer-events: none;
 }
