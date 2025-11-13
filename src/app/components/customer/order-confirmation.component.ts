@@ -74,22 +74,23 @@ import { DatePipe, DecimalPipe } from '@angular/common';
   styles: `
     .confirmation-container {
       min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: var(--cream-bg);
       padding: 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 4rem;
     }
 
     .confirmation-card,
     .error-card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      padding: 2rem;
+      background: var(--warm-white);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px var(--shadow-medium);
+      padding: 2.5rem;
       max-width: 600px;
       width: 100%;
+      border: 2px solid var(--border-beige);
+      margin-top: 4rem;
     }
 
     .success-icon {
@@ -99,14 +100,14 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     }
 
     h1 {
-      color: #2c3e50;
+      color: var(--dark-brown);
       text-align: center;
       margin-bottom: 0.5rem;
     }
 
     .order-id {
       text-align: center;
-      color: #7f8c8d;
+      color: var(--text-light);
       font-size: 1.1rem;
       margin-bottom: 2rem;
     }
@@ -116,36 +117,38 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     .order-items {
       margin-bottom: 2rem;
       padding-bottom: 1.5rem;
-      border-bottom: 1px solid #eee;
+      border-bottom: 2px solid var(--border-beige);
     }
 
     h2 {
-      color: #2c3e50;
-      font-size: 1.1rem;
+      color: var(--dark-brown);
+      font-size: 1.2rem;
       margin-bottom: 1rem;
+      font-weight: 700;
     }
 
     .detail-row {
       display: flex;
       justify-content: space-between;
       padding: 0.5rem 0;
-      color: #555;
+      color: var(--text-medium);
     }
 
     .detail-row span:last-child {
       font-weight: 600;
+      color: var(--text-dark);
     }
 
     .status-paid {
-      color: #27ae60;
+      color: var(--success-green);
     }
 
     .status-pending {
-      color: #f39c12;
+      color: var(--warning-orange);
     }
 
     .delivery-info p {
-      color: #555;
+      color: var(--text-medium);
       margin: 0.5rem 0;
     }
 
@@ -153,7 +156,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       display: flex;
       justify-content: space-between;
       padding: 0.5rem 0;
-      color: #555;
+      color: var(--text-medium);
     }
 
     .order-total {
@@ -161,10 +164,10 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       justify-content: space-between;
       padding-top: 1rem;
       margin-top: 1rem;
-      border-top: 2px solid #eee;
+      border-top: 2px solid var(--buff);
       font-weight: bold;
-      color: #2c3e50;
-      font-size: 1.1rem;
+      color: var(--dark-brown);
+      font-size: 1.2rem;
     }
 
     .actions {
@@ -178,30 +181,36 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       flex: 1;
       padding: 0.75rem;
       border: none;
-      border-radius: 4px;
+      border-radius: 25px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
+      font-size: 1rem;
     }
 
     .btn-primary {
-      background: #27ae60;
-      color: white;
+      background: var(--buff);
+      color: var(--cream-bg);
+      box-shadow: 0 4px 8px var(--shadow-light);
     }
 
     .btn-primary:hover {
-      background: #229954;
+      background: var(--primary-brown);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px var(--shadow-medium);
     }
 
     .btn-secondary {
-      background: white;
-      color: #667eea;
-      border: 2px solid #667eea;
+      background: var(--warm-white);
+      color: var(--dark-brown);
+      border: 2px solid var(--buff);
     }
 
     .btn-secondary:hover {
-      background: #667eea;
-      color: white;
+      background: var(--buff);
+      color: var(--cream-bg);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px var(--shadow-medium);
     }
 
     .error-card {
@@ -209,7 +218,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     }
 
     .error-card p {
-      color: #e74c3c;
+      color: var(--error-red);
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
     }
