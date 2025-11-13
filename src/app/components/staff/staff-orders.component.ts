@@ -123,6 +123,7 @@ import { FormsModule } from '@angular/forms';
       max-width: 1400px;
       margin: 0 auto;
       padding: 2rem;
+      margin-top: 4rem;
     }
 
     .header {
@@ -130,7 +131,7 @@ import { FormsModule } from '@angular/forms';
     }
 
     .header h1 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 1rem;
     }
 
@@ -151,13 +152,13 @@ import { FormsModule } from '@angular/forms';
     }
 
     .filter-btn:hover {
-      border-color: #f39c12;
+      border-color: #6B3E2E;
     }
 
     .filter-btn.active {
-      background: #f39c12;
+      background: var(--primary-brown);
       color: white;
-      border-color: #f39c12;
+      border-color: var(--cream);
     }
 
     .success-message {
@@ -175,7 +176,7 @@ import { FormsModule } from '@angular/forms';
       background: white;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      color: #7f8c8d;
+      color: #6B3E2E;
     }
 
     .orders-grid {
@@ -201,12 +202,12 @@ import { FormsModule } from '@angular/forms';
     }
 
     .order-header h3 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 0.25rem;
     }
 
     .order-date {
-      color: #7f8c8d;
+      color: var(--light-brown);
       font-size: 0.9rem;
     }
 
@@ -218,33 +219,33 @@ import { FormsModule } from '@angular/forms';
     }
 
     .status-pending {
-      background: #fff3cd;
-      color: #856404;
+      background: var(--cream);
+      color: #6B3E2E;
     }
 
     .status-preparing {
-      background: #cfe2ff;
-      color: #084298;
+      background: var(--cream);
+      color: #6B3E2E;
     }
 
     .status-ready {
-      background: #d1e7dd;
-      color: #0f5132;
+      background: var(--cream);
+      color: #6B3E2E;
     }
 
     .status-out-for-delivery {
-      background: #e7d1ff;
-      color: #5a0f84;
+      background: var(--cream);
+      color: #6B3E2E;
     }
 
     .status-delivered {
-      background: #d1e7dd;
-      color: #0f5132;
+      background: var(--cream);
+      color: #6B3E2E;
     }
 
     .status-cancelled {
-      background: #f8d7da;
-      color: #842029;
+      background: var(--cream);
+      color: #6B3E2E;
     }
 
     .customer-info,
@@ -255,20 +256,20 @@ import { FormsModule } from '@angular/forms';
 
     .customer-info h4,
     .order-items h4 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 0.5rem;
       font-size: 1rem;
     }
 
     .customer-info p {
-      color: #555;
+      color: var(--light-brown);
       font-size: 0.9rem;
       margin: 0.25rem 0;
     }
 
     .notes {
       font-style: italic;
-      color: #7f8c8d;
+      color: var(--light-brown);
       margin-top: 0.5rem;
     }
 
@@ -276,7 +277,7 @@ import { FormsModule } from '@angular/forms';
       display: flex;
       justify-content: space-between;
       padding: 0.5rem 0;
-      color: #555;
+      color: var(--light-brown);
       font-size: 0.9rem;
     }
 
@@ -287,7 +288,7 @@ import { FormsModule } from '@angular/forms';
       margin-top: 0.5rem;
       border-top: 1px solid #eee;
       font-weight: bold;
-      color: #2c3e50;
+      color: var(--light-brown);
     }
 
     .order-actions {
@@ -300,7 +301,7 @@ import { FormsModule } from '@angular/forms';
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 600;
-      color: #2c3e50;
+      color: var(--light-brown);
     }
 
     .status-select {
@@ -315,7 +316,7 @@ import { FormsModule } from '@angular/forms';
 
     .status-select:focus {
       outline: none;
-      border-color: #f39c12;
+      border-color: var(--cream);
     }
 
     .payment-info {
@@ -323,7 +324,7 @@ import { FormsModule } from '@angular/forms';
       justify-content: space-between;
       margin-top: 1rem;
       font-size: 0.9rem;
-      color: #7f8c8d;
+      color: #6B3E2E;
     }
 
     .payment-paid {

@@ -1,40 +1,40 @@
-/* Oh Crêpe! Color Palette - Refined Beige & Cream */
+/* Oh Crêpe! Color Palette - Bakery Shop Theme */
 :root {
-  /* Primary Palette - From Image */
-  --light-yellow: #FFFCE0;      /* Light yellow - Lightest tone */
-  --cream: #FCF4D7;              /* Cream - Soft backgrounds */
-  --papaya-whip: #FAEDCD;        /* Papaya whip - Card backgrounds */
-  --sunset: #E7C8A0;             /* Sunset - Accents */
-  --buff: #D4A373;               /* Buff - Primary actions */
+  /* Primary Palette - From Bakery Image */
+  --light-yellow: #FFF9E6;      /* Light cream - Lightest tone */
+  --cream: #F5E6C8;              /* Warm cream - Soft backgrounds */
+  --papaya-whip: #E8D4B4;        /* Tan beige - Card backgrounds */
+  --sunset: #D9B896;             /* Medium tan - Accents */
+  --buff: #C49A6C;               /* Brown tan - Primary actions */
   
   /* Derived Colors for UI */
-  --primary-brown: #B8956A;      /* Darker buff for text */
-  --dark-brown: #8B6F47;         /* Even darker for headings */
-  --accent-peach: #D4A373;       /* Buff - buttons and highlights */
-  --accent-warm: #E7C8A0;        /* Sunset - hover states */
+  --primary-brown: #A67C52;      /* Rich brown for navbar/text */
+  --dark-brown: #6B3E2E;         /* Deep brown for headings */
+  --accent-peach: #C49A6C;       /* Tan brown - buttons and highlights */
+  --accent-warm: #D9B896;        /* Light tan - hover states */
   
   /* Neutral Colors */
-  --cream-bg: #FFFCE0;           /* Light yellow - page background */
-  --warm-white: #FCF4D7;         /* Cream - card backgrounds */
-  --soft-beige: #FAEDCD;         /* Papaya whip - subtle backgrounds */
-  --border-beige: #E7C8A0;       /* Sunset - borders */
+  --cream-bg: #FFF9E6;           /* Light cream - page background */
+  --warm-white: #F5E6C8;         /* Warm cream - card backgrounds */
+  --soft-beige: #E8D4B4;         /* Tan beige - subtle backgrounds */
+  --border-beige: #D9B896;       /* Medium tan - borders */
   
   /* Semantic Colors (adjusted to match palette) */
   --success-green: #8FBC8F;      /* Soft green for success */
-  --warning-orange: #D4A373;     /* Buff for warnings */
-  --error-red: #CD5C5C;          /* Muted red for errors */
+  --warning-orange: #C49A6C;     /* Tan brown for warnings */
+  --error-red: #A54E3D;          /* Muted red-brown for errors */
   --info-blue: #87CEEB;          /* Soft blue for info */
   
   /* Text Colors - Enhanced for better readability */
-  --text-dark: #2C1810;          /* Very dark brown for primary text */
-  --text-medium: #5C4A3A;        /* Dark brown for secondary text */
-  --text-light: #8B6F47;         /* Medium brown for tertiary text */
+  --text-dark: #3D2817;          /* Very dark brown for primary text */
+  --text-medium: #6B3E2E;        /* Dark brown for secondary text */
+  --text-light: #A67C52;         /* Medium brown for tertiary text */
   
   /* Border & Shadow */
-  --border-color: #E7C8A0;       /* Sunset tone for borders */
-  --shadow-light: rgba(180, 149, 106, 0.1);
-  --shadow-medium: rgba(180, 149, 106, 0.2);
-  --shadow-heavy: rgba(180, 149, 106, 0.3);
+  --border-color: #D9B896;       /* Medium tan for borders */
+  --shadow-light: rgba(166, 124, 82, 0.1);
+  --shadow-medium: rgba(166, 124, 82, 0.2);
+  --shadow-heavy: rgba(166, 124, 82, 0.3);
 }
 
 /* Global Styles */
@@ -69,7 +69,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 252, 224, 0.40);
+  background: rgba(255, 249, 230, 0.40);
   z-index: -1;
   pointer-events: none;
 }
@@ -112,7 +112,7 @@ a {
 }
 
 .content-overlay {
-  background: rgba(255, 252, 224, 0.9);
+  background: rgba(255, 249, 230, 0.9);
   backdrop-filter: blur(1px);
   border-radius: 8px;
   padding: 1rem;

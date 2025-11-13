@@ -153,6 +153,7 @@ import { DecimalPipe } from '@angular/common';
       max-width: 1400px;
       margin: 0 auto;
       padding: 2rem;
+      margin-top: 4rem;
     }
 
     .header {
@@ -163,7 +164,7 @@ import { DecimalPipe } from '@angular/common';
     }
 
     .header h1 {
-      color: #2c3e50;
+      color: #6B3E2E;
     }
 
     .btn-add {
@@ -206,7 +207,7 @@ import { DecimalPipe } from '@angular/common';
     }
 
     .modal-content h2 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 1.5rem;
     }
 
@@ -223,7 +224,7 @@ import { DecimalPipe } from '@angular/common';
     label {
       display: block;
       margin-bottom: 0.5rem;
-      color: #2c3e50;
+      color: var(--light-brown);
       font-weight: 600;
     }
 
@@ -328,12 +329,12 @@ import { DecimalPipe } from '@angular/common';
     }
 
     .card-content h3 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 0.5rem;
     }
 
     .description {
-      color: #7f8c8d;
+      color: var(--light-brown);
       font-size: 0.9rem;
       margin-bottom: 1rem;
       line-height: 1.5;

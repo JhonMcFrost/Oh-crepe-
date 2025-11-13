@@ -79,6 +79,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 4rem;
     }
 
     .confirmation-card,

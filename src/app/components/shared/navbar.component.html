@@ -1,0 +1,42 @@
+<div class="navbar-wrapper">
+  <div class="navbar-melted">
+    <nav class="navbar">
+      <div class="nav-content">
+        <div class="logo"><a routerLink="/" class="logo">
+          <img src="/assets/images/oh_crepe_logo.png" alt="Oh Crêpe Logo" class="logo-img">
+          Oh Crepe!
+        </a>
+        </div>
+
+        <div class="nav-links">
+          <ul class="nav-links">
+            @for (link of navLinks(); track link.route) {
+              <li>
+                @if (link.route === '/cart') {
+                  <a [routerLink]="link.route" [class]="link.class">
+                    {{ link.label }}
+                    @if (hasCartItems()) {
+                      <span class="cart-badge">{{ cartItemCount() }}</span>
+                    }
+                  </a>
+                } @else {
+                  <a [routerLink]="link.route" [class]="link.class">{{ link.label }}</a>
+                }
+              </li>
+            }
+
+            @if (isAuthenticated()) {
+              <li class="navbar-user">
+                <span class="user-name">{{ userName() }}</span>
+                <button (click)="logout()" class="btn-logout">Logout</button>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Melted edge effect -->
+    <div class="melted-edge"></div>
+  </div>
+</div>

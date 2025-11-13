@@ -134,6 +134,7 @@ import { DecimalPipe } from '@angular/common';
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
+      margin-top: 4rem;
     }
 
     h1 {

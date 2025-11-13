@@ -130,6 +130,7 @@ import { DatePipe } from '@angular/common';
       max-width: 1400px;
       margin: 0 auto;
       padding: 2rem;
+      margin-top: 4rem;
     }
 
     .header {
@@ -137,7 +138,7 @@ import { DatePipe } from '@angular/common';
     }
 
     .header h1 {
-      color: #2c3e50;
+      color: #6B3E2E;
     }
 
     .success-message {
@@ -174,7 +175,7 @@ import { DatePipe } from '@angular/common';
 
     .users-table th {
       font-weight: 600;
-      color: #2c3e50;
+      color: var(--light-brown);
     }
 
     .users-table tbody tr:hover {
@@ -263,7 +264,7 @@ import { DatePipe } from '@angular/common';
     }
 
     .modal-content h2 {
-      color: #2c3e50;
+      color: var(--light-brown);
       margin-bottom: 1.5rem;
     }
 
@@ -274,7 +275,7 @@ import { DatePipe } from '@angular/common';
     label {
       display: block;
       margin-bottom: 0.5rem;
-      color: #2c3e50;
+      color: var(--light-brown);
       font-weight: 600;
     }
 

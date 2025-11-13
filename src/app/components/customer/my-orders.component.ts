@@ -94,10 +94,11 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       max-width: 900px;
       margin: 0 auto;
       padding: 2rem;
+      margin-top: 4rem;
     }
 
     h1 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 2rem;
     }
 
@@ -110,7 +111,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     }
 
     .empty-state p {
-      color: #7f8c8d;
+      color: #6B3E2E;
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
     }
@@ -153,12 +154,12 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     }
 
     .order-header h3 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 0.25rem;
     }
 
     .order-date {
-      color: #7f8c8d;
+      color: var(--text-light);
       font-size: 0.9rem;
     }
 
@@ -171,32 +172,32 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 
     .status-pending {
       background: #fff3cd;
-      color: #856404;
+      color: #6B3E2E;
     }
 
     .status-preparing {
       background: #cfe2ff;
-      color: #084298;
+      color: #6B3E2E;
     }
 
     .status-ready {
       background: #d1e7dd;
-      color: #0f5132;
+      color: #6B3E2E;
     }
 
     .status-out-for-delivery {
       background: #e7d1ff;
-      color: #5a0f84;
+      color: #6B3E2E;
     }
 
     .status-delivered {
-      background: #d1e7dd;
-      color: #0f5132;
+      background: var(--cream);
+      color: #6B3E2E;
     }
 
     .status-cancelled {
       background: #f8d7da;
-      color: #842029;
+      color: #6B3E2E;
     }
 
     .order-progress {
@@ -213,7 +214,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(90deg, var(--text-light) 0%, #6B3E2E 100%);
       transition: width 0.5s ease;
     }
 
@@ -240,7 +241,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 
     .step-label {
       font-size: 0.75rem;
-      color: #2c3e50;
+      color: #6B3E2E;
       font-weight: 600;
     }
 
@@ -249,7 +250,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     }
 
     .order-items h4 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 0.75rem;
     }
 
@@ -257,7 +258,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       display: flex;
       justify-content: space-between;
       padding: 0.5rem 0;
-      color: #555;
+      color: #6B3E2E;
     }
 
     .order-footer {
@@ -269,7 +270,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       display: flex;
       justify-content: space-between;
       font-weight: bold;
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 0.5rem;
     }
 

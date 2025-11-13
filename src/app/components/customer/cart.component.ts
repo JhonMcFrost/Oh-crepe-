@@ -82,10 +82,11 @@ import { DecimalPipe } from '@angular/common';
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
+      margin-top: 4rem;
     }
 
     h1 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 2rem;
     }
 
@@ -98,7 +99,7 @@ import { DecimalPipe } from '@angular/common';
     }
 
     .empty-cart p {
-      color: #7f8c8d;
+      color: var(--light-brown);
       font-size: 1.25rem;
       margin-bottom: 1.5rem;
     }
@@ -134,12 +135,12 @@ import { DecimalPipe } from '@angular/common';
     }
 
     .item-details h3 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 0.25rem;
     }
 
     .item-price {
-      color: #7f8c8d;
+      color: var(--light-brown);
       font-size: 0.9rem;
     }
 
@@ -162,7 +163,7 @@ import { DecimalPipe } from '@angular/common';
 
     .btn-quantity:hover {
       background: #f8f9fa;
-      border-color: #f39c12;
+      border-color: #6B3E2E;
     }
 
     .quantity {
@@ -201,7 +202,7 @@ import { DecimalPipe } from '@angular/common';
     }
 
     .cart-summary h2 {
-      color: #2c3e50;
+      color: #6B3E2E;
       margin-bottom: 1rem;
     }
 
@@ -215,7 +216,7 @@ import { DecimalPipe } from '@angular/common';
     .summary-row.total {
       font-size: 1.25rem;
       font-weight: bold;
-      color: #2c3e50;
+      color: #6B3E2E;
       border-bottom: none;
       padding-top: 1rem;
     }
@@ -258,8 +259,8 @@ import { DecimalPipe } from '@angular/common';
 
     .btn-primary {
       padding: 0.75rem 2rem;
-      background: #f39c12;
-      color: white;
+      background: var(--cream);
+      color: #6B3E2E;
       border: none;
       border-radius: 4px;
       font-weight: 600;
@@ -268,7 +269,7 @@ import { DecimalPipe } from '@angular/common';
     }
 
     .btn-primary:hover {
-      background: #e67e22;
+      background: Var(--buff);
     }
 
     @media (max-width: 768px) {
