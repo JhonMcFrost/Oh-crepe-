@@ -11,11 +11,41 @@ import { DatePipe } from '@angular/common';
     <div class="admin-users-container">
       <div class="header">
         <h1>Manage Users 👥</h1>
+        <button (click)="openAddStaffForm()" class="btn-add-staff">
+          ➕ Add Staff Account
+        </button>
       </div>
 
       @if (successMessage()) {
         <div class="success-message">{{ successMessage() }}</div>
       }
+
+      <div class="filter-tabs">
+        <button 
+          (click)="setFilter('all')" 
+          class="tab-button"
+          [class.active]="activeFilter() === 'all'">
+          All Users ({{ getAllUsersCount() }})
+        </button>
+        <button 
+          (click)="setFilter('customer')" 
+          class="tab-button"
+          [class.active]="activeFilter() === 'customer'">
+          Customers ({{ getCustomersCount() }})
+        </button>
+        <button 
+          (click)="setFilter('staff')" 
+          class="tab-button"
+          [class.active]="activeFilter() === 'staff'">
+          Staff ({{ getStaffCount() }})
+        </button>
+        <button 
+          (click)="setFilter('admin')" 
+          class="tab-button"
+          [class.active]="activeFilter() === 'admin'">
+          Admins ({{ getAdminsCount() }})
+        </button>
+      </div>
 
       <div class="users-table-container">
         <table class="users-table">
@@ -30,7 +60,7 @@ import { DatePipe } from '@angular/common';
             </tr>
           </thead>
           <tbody>
-            @for (user of users; track user.id) {
+            @for (user of filteredUsers(); track user.id) {
               <tr>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
@@ -57,11 +87,11 @@ import { DatePipe } from '@angular/common';
         </table>
       </div>
 
-      @if (showEditForm()) {
+      @if (showEditForm() || showAddStaffForm()) {
         <div class="modal-overlay" (click)="closeEditForm()">
           <div class="modal-content" (click)="$event.stopPropagation()">
-            <h2>Edit User</h2>
-            <form (ngSubmit)="saveUser()">
+            <h2>{{ showAddStaffForm() ? 'Add Staff Account' : 'Edit User' }}</h2>
+            <form (ngSubmit)="showAddStaffForm() ? addStaff() : saveUser()">
               <div class="form-group">
                 <label for="name">Name</label>
                 <input
@@ -114,7 +144,9 @@ import { DatePipe } from '@angular/common';
               </div>
 
               <div class="form-actions">
-                <button type="submit" class="btn-submit">Update User</button>
+                <button type="submit" class="btn-submit">
+                  {{ showAddStaffForm() ? 'Add Staff' : 'Update User' }}
+                </button>
                 <button type="button" (click)="closeEditForm()" class="btn-cancel">
                   Cancel
                 </button>
@@ -134,11 +166,72 @@ import { DatePipe } from '@angular/common';
     }
 
     .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .header h1 {
       color: #6B3E2E;
+      margin: 0;
+    }
+
+    .btn-add-staff {
+      padding: 0.75rem 1.5rem;
+      background: var(--buff);
+      color: var(--dark-brown);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-add-staff:hover {
+      background: var(--dark-brown);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      background: white;
+      padding: 0.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 0.75rem 1.5rem;
+      border: 2px solid transparent;
+      background: transparent;
+      color: var(--text-light);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .tab-button:hover {
+      background: #f8f9fa;
+      color: var(--dark-brown);
+    }
+
+    .tab-button.active {
+      background: var(--buff);
+      color: var(--dark-brown);
+      border-color: var(--dark-brown);
     }
 
     .success-message {
@@ -352,8 +445,10 @@ export class AdminUsersComponent {
   protected readonly users = this.authService.getAllUsers();
   protected readonly currentUserId = this.authService.currentUser()?.id;
   protected readonly showEditForm = signal(false);
+  protected readonly showAddStaffForm = signal(false);
   protected readonly editingUser = signal<User | null>(null);
   protected readonly successMessage = signal('');
+  protected readonly activeFilter = signal<'all' | UserRole>('all');
 
   protected formData = {
     name: '',
@@ -362,6 +457,75 @@ export class AdminUsersComponent {
     address: '',
     role: 'customer' as UserRole,
   };
+
+  // Computed filtered users
+  protected filteredUsers = signal<User[]>([]);
+
+  constructor() {
+    this.updateFilteredUsers();
+  }
+
+  // Filter methods
+  setFilter(filter: 'all' | UserRole): void {
+    this.activeFilter.set(filter);
+    this.updateFilteredUsers();
+  }
+
+  private updateFilteredUsers(): void {
+    const filter = this.activeFilter();
+    if (filter === 'all') {
+      this.filteredUsers.set(this.users);
+    } else {
+      this.filteredUsers.set(this.users.filter(user => user.role === filter));
+    }
+  }
+
+  // Count methods
+  getAllUsersCount(): number {
+    return this.users.length;
+  }
+
+  getCustomersCount(): number {
+    return this.users.filter(u => u.role === 'customer').length;
+  }
+
+  getStaffCount(): number {
+    return this.users.filter(u => u.role === 'staff').length;
+  }
+
+  getAdminsCount(): number {
+    return this.users.filter(u => u.role === 'admin').length;
+  }
+
+  openAddStaffForm(): void {
+    this.formData = {
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      role: 'staff',
+    };
+    this.showAddStaffForm.set(true);
+  }
+
+  addStaff(): void {
+    const newUser = this.authService.register({
+      email: this.formData.email,
+      name: this.formData.name,
+      phone: this.formData.phone,
+      address: this.formData.address,
+      role: this.formData.role,
+    });
+
+    if (newUser) {
+      this.successMessage.set('Staff account created successfully!');
+      this.closeEditForm();
+      this.updateFilteredUsers();
+      setTimeout(() => this.successMessage.set(''), 3000);
+    } else {
+      alert('Email already exists!');
+    }
+  }
 
   editUser(user: User): void {
     this.editingUser.set(user);
@@ -382,6 +546,7 @@ export class AdminUsersComponent {
     this.authService.updateUser(editing.id, this.formData);
     this.successMessage.set('User updated successfully!');
     this.closeEditForm();
+    this.updateFilteredUsers();
     setTimeout(() => this.successMessage.set(''), 3000);
   }
 
@@ -389,12 +554,14 @@ export class AdminUsersComponent {
     if (confirm('Are you sure you want to delete this user?')) {
       this.authService.deleteUser(userId);
       this.successMessage.set('User deleted successfully!');
+      this.updateFilteredUsers();
       setTimeout(() => this.successMessage.set(''), 3000);
     }
   }
 
   closeEditForm(): void {
     this.showEditForm.set(false);
+    this.showAddStaffForm.set(false);
     this.editingUser.set(null);
     this.formData = {
       name: '',

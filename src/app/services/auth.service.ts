@@ -78,20 +78,22 @@ export class AuthService {
     localStorage.removeItem('currentUser');
   }
 
-  register(email: string, name: string, phone: string, address: string): User | null {
+  register(userData: { email: string; name: string; phone?: string; address?: string; password?: string; role?: UserRole; firebaseUid?: string; photoURL?: string }): User | null {
     // Check if email already exists
-    if (this.mockUsers.some((u) => u.email === email)) {
+    if (this.mockUsers.some((u) => u.email === userData.email)) {
       return null;
     }
 
     const newUser: User = {
       id: Date.now().toString(),
-      email,
-      name,
-      phone,
-      address,
-      role: 'customer',
+      email: userData.email,
+      name: userData.name,
+      phone: userData.phone,
+      address: userData.address,
+      role: userData.role || 'customer',
       createdAt: new Date(),
+      firebaseUid: userData.firebaseUid,
+      photoURL: userData.photoURL,
     };
 
     this.mockUsers.push(newUser);
@@ -134,5 +136,17 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  // Helper methods for Firebase integration
+  async getUserByEmail(email: string): Promise<User | null> {
+    const user = this.mockUsers.find((u) => u.email === email);
+    return user || null;
+  }
+
+  async setCurrentUser(user: User): Promise<void> {
+    this.currentUserSignal.set(user);
+    this.isAuthenticatedSignal.set(true);
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 }

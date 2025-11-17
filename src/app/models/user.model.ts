@@ -8,4 +8,6 @@ export interface User {
   phone?: string;
   address?: string;
   createdAt: Date;
+  firebaseUid?: string;
+  photoURL?: string;
 }

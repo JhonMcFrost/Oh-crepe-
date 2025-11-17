@@ -144,7 +144,7 @@ import { DecimalPipe } from '@angular/common';
       box-shadow: 0 4px 12px var(--shadow-light);
       overflow: hidden;
       transition: all 0.3s;
-      border: 2px solid var(--cream);
+      border: 2px solid var(--dark-brown);
     }
 
     .menu-card:hover {
