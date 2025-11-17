@@ -69,10 +69,10 @@ import { DecimalPipe } from '@angular/common';
                 <input
                   type="radio"
                   name="payment"
-                  value="online"
+                  value="gcash"
                   [(ngModel)]="paymentMethod"
                 />
-                <span>💳 Online Payment</span>
+                <span>💳 GCash</span>
               </label>
               <label class="payment-option">
                 <input
@@ -313,7 +313,7 @@ export class CheckoutComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  protected readonly deliveryFee = 5.0;
+  protected readonly deliveryFee = 50;
   protected readonly isProcessing = signal(false);
   protected readonly errorMessage = signal('');
 

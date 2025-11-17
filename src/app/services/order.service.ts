@@ -42,7 +42,9 @@ export class OrderService {
     paymentMethod: PaymentMethod,
     notes?: string
   ): Order {
-    const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const DELIVERY_FEE = 50;
+    const itemsTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const totalAmount = itemsTotal + DELIVERY_FEE;
     const now = new Date();
     const estimatedDeliveryTime = new Date(now.getTime() + 45 * 60000); // 45 minutes
 
@@ -56,7 +58,7 @@ export class OrderService {
       totalAmount,
       status: 'pending',
       paymentMethod,
-      paymentStatus: paymentMethod === 'online' ? 'paid' : 'pending',
+      paymentStatus: paymentMethod === 'gcash' ? 'paid' : 'pending',
       createdAt: now,
       updatedAt: now,
       estimatedDeliveryTime,

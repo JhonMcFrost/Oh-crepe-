@@ -72,15 +72,22 @@ import { DatePipe, DecimalPipe } from '@angular/common';
               </div>
 
               <div class="order-footer">
-                <div class="order-total">
-                  <span>Total:</span>
-                  <span class="total-amount">₱{{ order.totalAmount | number:'1.2-2' }}</span>
-                </div>
-                @if (order.estimatedDeliveryTime && order.status !== 'delivered' && order.status !== 'cancelled') {
-                  <div class="estimated-time">
-                    <span>Estimated Delivery:</span>
-                    <span>{{ order.estimatedDeliveryTime | date : 'short' }}</span>
+                <div class="order-info">
+                  <div class="order-total">
+                    <span>Total:</span>
+                    <span class="total-amount">₱{{ order.totalAmount | number:'1.2-2' }}</span>
                   </div>
+                  @if (order.estimatedDeliveryTime && order.status !== 'delivered' && order.status !== 'cancelled') {
+                    <div class="estimated-time">
+                      <span>Estimated Delivery:</span>
+                      <span>{{ order.estimatedDeliveryTime | date : 'short' }}</span>
+                    </div>
+                  }
+                </div>
+                @if (canCancelOrder(order.status)) {
+                  <button (click)="cancelOrder(order.id)" class="btn-cancel">
+                    ❌ Cancel Order
+                  </button>
                 }
               </div>
             </div>
@@ -262,8 +269,18 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     }
 
     .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding-top: 1rem;
       border-top: 1px solid #eee;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .order-info {
+      flex: 1;
+      min-width: 200px;
     }
 
     .order-total {
@@ -284,6 +301,40 @@ import { DatePipe, DecimalPipe } from '@angular/common';
       justify-content: space-between;
       color: #7f8c8d;
       font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-cancel {
+      padding: 0.75rem 1.5rem;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .btn-cancel:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+    }
+
+    .btn-cancel:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .order-footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-cancel {
+        width: 100%;
+      }
     }
   `,
 })
@@ -340,5 +391,28 @@ export class MyOrdersComponent {
 
   goToMenu(): void {
     window.location.href = '/menu';
+  }
+
+  canCancelOrder(status: OrderStatus): boolean {
+    // Only allow cancellation for pending and preparing orders
+    return status === 'pending' || status === 'preparing';
+  }
+
+  cancelOrder(orderId: string): void {
+    if (confirm('Are you sure you want to cancel this order?')) {
+      const success = this.orderService.cancelOrder(orderId);
+      if (success) {
+        alert('Order cancelled successfully!');
+        // Refresh orders list
+        const currentUser = this.authService.currentUser();
+        if (currentUser) {
+          this.orders = this.orderService
+            .getOrdersByCustomerId(currentUser.id)
+            .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        }
+      } else {
+        alert('Failed to cancel order. Please try again.');
+      }
+    }
   }
 }

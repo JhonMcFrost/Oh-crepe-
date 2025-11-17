@@ -249,7 +249,7 @@ export class OrderConfirmationComponent {
   }
 
   formatPaymentMethod(method: string): string {
-    return method === 'online' ? 'Online Payment' : 'Cash on Delivery';
+    return method === 'gcash' ? 'GCash' : 'Cash on Delivery';
   }
 
   formatPaymentStatus(status: string): string {

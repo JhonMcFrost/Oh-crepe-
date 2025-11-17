@@ -1,6 +1,6 @@
 export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'out-for-delivery' | 'delivered' | 'cancelled';
 
-export type PaymentMethod = 'online' | 'cash-on-delivery';
+export type PaymentMethod = 'gcash' | 'cash-on-delivery';
 
 export type PaymentStatus = 'pending' | 'paid' | 'failed';
 
