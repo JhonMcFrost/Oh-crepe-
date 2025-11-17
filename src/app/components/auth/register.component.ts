@@ -157,6 +157,7 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
       width: 100%;
       max-width: 500px;
       border: 3px solid var(--cream);
+      margin-top: 4rem;
     }
 
     h1 {
