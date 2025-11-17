@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
 import { Order, OrderStatus } from '../../models/order.model';
@@ -11,14 +11,14 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     <div class="my-orders-container">
       <h1>My Orders 📦</h1>
 
-      @if (orders.length === 0) {
+      @if (orders().length === 0) {
         <div class="empty-state">
           <p>You haven't placed any orders yet.</p>
           <button (click)="goToMenu()" class="btn-primary">Browse Menu</button>
         </div>
       } @else {
         <div class="orders-list">
-          @for (order of orders; track order.id) {
+          @for (order of orders(); track order.id) {
             <div class="order-card">
               <div class="order-header">
                 <div>
@@ -342,14 +342,19 @@ export class MyOrdersComponent {
   private readonly orderService = inject(OrderService);
   private readonly authService = inject(AuthService);
 
-  protected readonly orders: Order[] = [];
+  protected readonly orders = signal<Order[]>([]);
 
   constructor() {
+    this.loadOrders();
+  }
+
+  private loadOrders(): void {
     const currentUser = this.authService.currentUser();
     if (currentUser) {
-      this.orders = this.orderService
+      const userOrders = this.orderService
         .getOrdersByCustomerId(currentUser.id)
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      this.orders.set(userOrders);
     }
   }
 
@@ -403,13 +408,7 @@ export class MyOrdersComponent {
       const success = this.orderService.cancelOrder(orderId);
       if (success) {
         alert('Order cancelled successfully!');
-        // Refresh orders list
-        const currentUser = this.authService.currentUser();
-        if (currentUser) {
-          this.orders = this.orderService
-            .getOrdersByCustomerId(currentUser.id)
-            .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        }
+        this.loadOrders();
       } else {
         alert('Failed to cancel order. Please try again.');
       }
