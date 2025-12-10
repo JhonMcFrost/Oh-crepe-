@@ -278,8 +278,20 @@ export class LoginComponent {
     this.errorMessage.set('');
 
     try {
-      await this.firebaseAuthService.signInWithEmail(this.email, this.password);
-      this.redirectBasedOnRole();
+      // Try mock authentication first for demo accounts
+      const success = this.authService.login(this.email, this.password);
+      
+      if (success) {
+        this.redirectBasedOnRole();
+      } else {
+        // If mock fails, try Firebase authentication
+        try {
+          await this.firebaseAuthService.signInWithEmail(this.email, this.password);
+          this.redirectBasedOnRole();
+        } catch (firebaseError: any) {
+          this.errorMessage.set('Invalid email or password');
+        }
+      }
     } catch (error: any) {
       console.error('Login error:', error);
       this.errorMessage.set(error.message || 'Invalid email or password');
