@@ -508,8 +508,8 @@ export class AdminUsersComponent {
     this.showAddStaffForm.set(true);
   }
 
-  addStaff(): void {
-    const newUser = this.authService.register({
+  async addStaff(): Promise<void> {
+    const newUser = await this.authService.register({
       email: this.formData.email,
       name: this.formData.name,
       phone: this.formData.phone,

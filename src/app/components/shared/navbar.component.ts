@@ -52,6 +52,7 @@ export class NavbarComponent {
 
     if (this.isAdmin()) {
       links.push(
+        { route: '/admin/dashboard', label: 'Dashboard', class: 'nav-link' },
         { route: '/admin/menu', label: 'Manage Menu', class: 'nav-link' },
         { route: '/admin/users', label: 'Manage Users', class: 'nav-link' }
       );

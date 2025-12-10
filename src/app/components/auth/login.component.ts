@@ -42,7 +42,13 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
             />
           </div>
 
-          <button type="submit" class="btn-submit">Login</button>
+          <button type="submit" class="btn-submit" [disabled]="isLoading()">
+            @if (isLoading()) {
+              <span>Logging in...</span>
+            } @else {
+              <span>Login</span>
+            }
+          </button>
         </form>
 
         <div class="divider">
@@ -73,21 +79,6 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
               <span>Continue with Facebook</span>
             }
           </button>
-        </div>
-
-        <div class="demo-accounts">
-          <p><strong>Demo Accounts:</strong></p>
-          <div class="demo-grid">
-            <button (click)="quickLogin('customer@ofos.com')" class="btn-demo">
-              Customer
-            </button>
-            <button (click)="quickLogin('staff@ofos.com')" class="btn-demo">
-              Staff
-            </button>
-            <button (click)="quickLogin('admin@ofos.com')" class="btn-demo">
-              Admin
-            </button>
-          </div>
         </div>
 
         <p class="register-link">
@@ -185,42 +176,6 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
       box-shadow: 0 6px 16px var(--shadow-medium);
     }
 
-    .demo-accounts {
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border-beige);
-    }
-
-    .demo-accounts p {
-      text-align: center;
-      color: var(--text-light);
-      margin-bottom: 1rem;
-    }
-
-    .demo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-    }
-
-    .btn-demo {
-      padding: 0.5rem;
-      background: var(--light-yellow);
-      border: 2px solid var(--border-beige);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 600;
-      color: var(--text-medium);
-    }
-
-    .btn-demo:hover {
-      background: var(--cream);
-      border-color: var(--buff);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px var(--shadow-light);
-    }
-
     .register-link {
       text-align: center;
       margin-top: 1.5rem;
@@ -316,21 +271,21 @@ export class LoginComponent {
   protected password = '';
   protected readonly errorMessage = signal('');
   protected readonly isOAuthLoading = signal(false);
+  protected readonly isLoading = signal(false);
 
-  login(): void {
-    const success = this.authService.login(this.email, this.password);
+  async login(): Promise<void> {
+    this.isLoading.set(true);
+    this.errorMessage.set('');
 
-    if (success) {
+    try {
+      await this.firebaseAuthService.signInWithEmail(this.email, this.password);
       this.redirectBasedOnRole();
-    } else {
-      this.errorMessage.set('Invalid email or password');
+    } catch (error: any) {
+      console.error('Login error:', error);
+      this.errorMessage.set(error.message || 'Invalid email or password');
+    } finally {
+      this.isLoading.set(false);
     }
-  }
-
-  quickLogin(email: string): void {
-    this.email = email;
-    this.password = 'password'; // Demo password
-    this.login();
   }
 
   private redirectBasedOnRole(): void {

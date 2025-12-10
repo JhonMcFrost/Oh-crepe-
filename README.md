@@ -66,19 +66,19 @@ The system includes three pre-configured demo accounts:
 
 1. **Customer Account**
    - Email: `customer@ofos.com`
-   - Password: `password` (any value works)
+   - Password: `password123`
    - Role: Customer
    - Access: Browse menu, place orders, track orders
 
 2. **Staff Account**
    - Email: `staff@ofos.com`
-   - Password: `password` (any value works)
+   - Password: `staff123`
    - Role: Staff
    - Access: View and manage orders
 
 3. **Admin Account**
    - Email: `admin@ofos.com`
-   - Password: `password` (any value works)
+   - Password: `admin123`
    - Role: Admin
    - Access: Full system access (menu, users, orders)
 

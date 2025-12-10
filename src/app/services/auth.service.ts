@@ -1,10 +1,12 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { Firestore, collection, doc, getDoc, setDoc, getDocs, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { User, UserRole } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly firestore = inject(Firestore);
   private readonly currentUserSignal = signal<User | null>(null);
   private readonly isAuthenticatedSignal = signal(false);
 
@@ -44,6 +46,13 @@ export class AuthService {
     },
   ];
 
+  // Mock passwords (in production, use Firebase Auth)
+  private readonly mockPasswords: Record<string, string> = {
+    'customer@ofos.com': 'password123',
+    'staff@ofos.com': 'staff123',
+    'admin@ofos.com': 'admin123',
+  };
+
   constructor() {
     // Check if user is stored in localStorage
     this.loadUserFromStorage();
@@ -59,10 +68,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): boolean {
-    // Simple mock authentication
+    // Validate credentials
     const user = this.mockUsers.find((u) => u.email === email);
+    const storedPassword = this.mockPasswords[email];
     
-    if (user) {
+    if (user && storedPassword === password) {
       this.currentUserSignal.set(user);
       this.isAuthenticatedSignal.set(true);
       localStorage.setItem('currentUser', JSON.stringify(user));
@@ -78,30 +88,39 @@ export class AuthService {
     localStorage.removeItem('currentUser');
   }
 
-  register(userData: { email: string; name: string; phone?: string; address?: string; password?: string; role?: UserRole; firebaseUid?: string; photoURL?: string }): User | null {
-    // Check if email already exists
-    if (this.mockUsers.some((u) => u.email === userData.email)) {
+  async register(userData: { email: string; name: string; phone?: string; address?: string; password?: string; role?: UserRole; firebaseUid?: string; photoURL?: string }): Promise<User | null> {
+    try {
+      // Check if user already exists in Firestore
+      const existingUser = await this.getUserByEmail(userData.email);
+      if (existingUser) {
+        return null;
+      }
+
+      const newUser: User = {
+        id: userData.firebaseUid || Date.now().toString(),
+        email: userData.email,
+        name: userData.name,
+        phone: userData.phone,
+        address: userData.address,
+        role: userData.role || 'customer',
+        createdAt: new Date(),
+        firebaseUid: userData.firebaseUid,
+        photoURL: userData.photoURL,
+      };
+
+      // Save to Firestore
+      await this.saveUserToFirestore(newUser);
+      
+      // Set as current user
+      this.currentUserSignal.set(newUser);
+      this.isAuthenticatedSignal.set(true);
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+      
+      return newUser;
+    } catch (error) {
+      console.error('Error registering user:', error);
       return null;
     }
-
-    const newUser: User = {
-      id: Date.now().toString(),
-      email: userData.email,
-      name: userData.name,
-      phone: userData.phone,
-      address: userData.address,
-      role: userData.role || 'customer',
-      createdAt: new Date(),
-      firebaseUid: userData.firebaseUid,
-      photoURL: userData.photoURL,
-    };
-
-    this.mockUsers.push(newUser);
-    this.currentUserSignal.set(newUser);
-    this.isAuthenticatedSignal.set(true);
-    localStorage.setItem('currentUser', JSON.stringify(newUser));
-    
-    return newUser;
   }
 
   hasRole(role: UserRole): boolean {
@@ -138,15 +157,43 @@ export class AuthService {
     return false;
   }
 
-  // Helper methods for Firebase integration
+  // Firebase Firestore methods
   async getUserByEmail(email: string): Promise<User | null> {
-    const user = this.mockUsers.find((u) => u.email === email);
-    return user || null;
+    try {
+      const userDoc = doc(this.firestore, 'users', email);
+      const docSnap = await getDoc(userDoc);
+      
+      if (docSnap.exists()) {
+        return { ...docSnap.data(), email } as User;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error getting user:', error);
+      return null;
+    }
   }
 
   async setCurrentUser(user: User): Promise<void> {
     this.currentUserSignal.set(user);
     this.isAuthenticatedSignal.set(true);
     localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  async saveUserToFirestore(user: User): Promise<void> {
+    try {
+      const userDoc = doc(this.firestore, 'users', user.email);
+      await setDoc(userDoc, {
+        name: user.name,
+        role: user.role,
+        phone: user.phone,
+        address: user.address,
+        firebaseUid: user.firebaseUid,
+        photoURL: user.photoURL,
+        createdAt: user.createdAt || new Date()
+      });
+    } catch (error) {
+      console.error('Error saving user to Firestore:', error);
+      throw error;
+    }
   }
 }

@@ -2,11 +2,14 @@ import { Injectable, inject, signal } from '@angular/core';
 import {
   Auth,
   signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   FacebookAuthProvider,
   signOut,
   User,
-  authState
+  authState,
+  updateProfile
 } from '@angular/fire/auth';
 import { AuthService } from './auth.service';
 
@@ -49,6 +52,42 @@ export class FirebaseAuthService {
     } catch (error: any) {
       console.error('Facebook sign-in error:', error);
       throw new Error(error.message || 'Failed to sign in with Facebook');
+    }
+  }
+
+  async signInWithEmail(email: string, password: string): Promise<void> {
+    try {
+      const result = await signInWithEmailAndPassword(this.auth, email, password);
+      await this.syncWithLocalAuth(result.user);
+    } catch (error: any) {
+      console.error('Email sign-in error:', error);
+      throw new Error(error.message || 'Failed to sign in');
+    }
+  }
+
+  async registerWithEmail(email: string, password: string, name: string, phone?: string, address?: string): Promise<void> {
+    try {
+      const result = await createUserWithEmailAndPassword(this.auth, email, password);
+      
+      // Update display name
+      if (name) {
+        await updateProfile(result.user, { displayName: name });
+      }
+      
+      // Create user profile in local system
+      const newUser = {
+        email: result.user.email || email,
+        name: name,
+        phone: phone,
+        address: address,
+        role: 'customer' as const,
+        firebaseUid: result.user.uid,
+      };
+      
+      await this.authService.register(newUser);
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      throw new Error(error.message || 'Failed to register');
     }
   }
 

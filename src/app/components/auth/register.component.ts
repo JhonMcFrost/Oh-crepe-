@@ -363,7 +363,7 @@ export class RegisterComponent {
   protected readonly isLoading = signal(false);
   protected readonly isOAuthLoading = signal(false);
 
-  register(): void {
+  async register(): Promise<void> {
     // Reset messages
     this.errorMessage.set('');
     this.successMessage.set('');
@@ -375,28 +375,27 @@ export class RegisterComponent {
 
     this.isLoading.set(true);
 
-    // Simulate API call delay
-    setTimeout(() => {
-      const newUser = this.authService.register({
-        email: this.email,
-        name: this.name,
-        phone: this.phone,
-        address: this.address
-      });
+    try {
+      await this.firebaseAuthService.registerWithEmail(
+        this.email,
+        this.password,
+        this.name,
+        this.phone,
+        this.address
+      );
 
+      this.successMessage.set('Account created successfully! Redirecting...');
+      
+      // Redirect to menu after 2 seconds
+      setTimeout(() => {
+        this.router.navigate(['/menu']);
+      }, 2000);
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      this.errorMessage.set(error.message || 'Failed to create account. Please try again.');
+    } finally {
       this.isLoading.set(false);
-
-      if (newUser) {
-        this.successMessage.set('Account created successfully! Redirecting...');
-        
-        // Redirect to menu after 2 seconds
-        setTimeout(() => {
-          this.router.navigate(['/menu']);
-        }, 2000);
-      } else {
-        this.errorMessage.set('Email already exists. Please use a different email.');
-      }
-    }, 1000);
+    }
   }
 
   private validateForm(): boolean {
